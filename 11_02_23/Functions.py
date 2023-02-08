@@ -15,7 +15,6 @@ Te llamas: {user_name}
 Tu edad es: {user_age}
 ===============================
     """)
-    return None
 
 
 
@@ -52,3 +51,17 @@ los números random:
     """)
 
 
+def Act4():
+    number = int(input("Escribe el número: "))
+    if number%2 == 0:
+        print(f"""
+===============================
+El número {number} es par
+===============================
+        """)
+    else:
+        print(f"""
+===============================
+El número {number} es impar
+===============================
+        """)
