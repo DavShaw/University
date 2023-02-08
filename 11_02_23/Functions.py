@@ -65,3 +65,102 @@ El número {number} es par
 El número {number} es impar
 ===============================
         """)
+
+
+
+def Act5():
+    deg = float(input("Ingresa los grados (En °F): "))
+    Newdeg = ((deg - 32) * 5)/9
+    print(f"""
+===============================
+La conversión de los grados de 
+°F ({deg}) a °C es: {Newdeg}
+===============================
+    """)
+
+
+def Act6():
+    max_list_len = int(input("¿Cuantos valores ingresaras en la lista: ?"))
+    list = []
+    for i in range(0,max_list_len):
+        new_data = float(input(f"Ingresa el valor #{i+1} de la lista: "))
+
+    SumOfList = sum(list)
+
+    print(f"""
+===============================
+La suma de los datos de la
+lista es: {SumOfList}
+===============================
+    """)
+
+def Act7():
+    max_list_len = int(input("¿Cuantos valores ingresaras en la lista: ?"))
+    list = []
+    for i in range(0,max_list_len):
+        new_data = float(input(f"Ingresa el valor #{i+1} de la lista: "))
+
+    Max_number = max(list)
+    Min_number = min(list)
+
+    print(f"""
+===============================
+El mayor valor de la lista: {Max_number}
+El menor valor de la lista: {Min_number}
+===============================
+    """)
+
+def Act8():
+    max_list_len = int(input("¿Cuantos valores ingresaras en la lista: ?"))
+    list = []
+    for i in range(0,max_list_len):
+        new_data = input(f"Ingresa el valor #{i+1} de la lista: ")
+
+
+    print(f"""
+===============================
+Lista original: {list}
+
+Lista modificada: {list[::-1]}
+===============================
+    """)
+
+
+def Act9(Len = 3):
+    matrix = []
+    for i in range(0,Len):
+        TempList = []
+        for j in range(0,Len):
+            TempList.append(random.radiant(0,90))
+        matrix.append(TempList)
+
+    print(f""""
+===============================
+La matrix es la siguiente:
+
+{matrix}
+===============================
+    """)
+
+
+
+def Act10():
+    numero = float(input("Numero: "))
+    if numero <= 0:
+        print(f"""
+===============================
+El factorial de {numero} es: 1
+===============================
+        """)
+    factorial = 1
+    while numero > 0:
+        factorial = factorial * numero
+        numero -= 1
+    print(f"""
+===============================
+El factorial de {numero} es {factorial}
+===============================
+    """)
+
+
+    
