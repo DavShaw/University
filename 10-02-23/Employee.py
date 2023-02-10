@@ -9,13 +9,6 @@ class Employee():
         self.join_date: str = join_date
         self.salary: float = salary
 
-    def Antiquity(self):
+    def Antiquity(self) -> float:
         join_date_diff = datetime.date(datetime.now()) - self.join_date
         return((join_date_diff.day + join_date_diff.seconds)/86400) / 365
-
-
-
-
-David = Employee("David", "29/08/2009", "02/01/2018",35000)
-Alfonso = Employee("Alfonso", "01/12/2001", "21/11/2015",31000)
-Martin = Employee("Martin", "25/05/2003", "05/02/2021",45000)
