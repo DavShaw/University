@@ -1,2 +1,0 @@
-Comportamiento: Acciones que dicho objeto puede hacer
-Estado: Carácteristicas y/o informaión del objeto
