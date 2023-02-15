@@ -24,12 +24,6 @@ class punto():
         distance = ((obj2.x - self.x)**2) + ((obj2.y - self.y)**2)
         distance = sqrt(distance)
         return distance
-    
-    def GetX(self):
-        return self.x
-    
-    def GetY(self):
-        return self.y
 
 
 class Rectangulo():
@@ -62,9 +56,38 @@ class Circulo():
         return formula <= self.radio
 
 
-center1 = punto(90,12)
-c1 = Circulo(center1,32)
-p1 = punto(901,52)
+class Carta():
+
+    def __init__(self, value: float, pinta: str):
+        self.value: float = value
+        self.pinta: str = pinta
 
 
+class CuentaBancaria():
 
+    def __init__(self, AccountNumber: int, owner: str, balance: float):
+        self.AccountNumber: int = AccountNumber
+        self.owner: str = owner
+        self.balance: float = balance
+
+    def Deposit(self, amount):
+        self.balance += amount
+
+    def WithDraw(self, amount):
+        if amount <= self.balance:
+            self.balance -= amount
+        else:
+            print("Error: Saldo insuficiente...")
+
+    def AddHandlingFee(self,percentage):
+        print(f"Se aplicará (cobrará) un {percentage}% de cuota de manejo en su cuenta")
+        HandlingFeeToTake = self.balance*0.2
+        self.balance -= HandlingFeeToTake
+
+    def ShowDetails(self):
+        print(f"""
+        Titular: {self.owner}
+        Número de cuenta: {self.AccountNumber}
+        Balance: {self.balance}
+        Cuota de manejo: 2%
+        """)
