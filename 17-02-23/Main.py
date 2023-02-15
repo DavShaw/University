@@ -17,7 +17,7 @@ Circulito = Circulo(Puntito1,25)
 
 Circulito.Area()
 Circulito.Perimeter()
-Circulito.PointBelongs(Puntito1,Puntito2)
+Circulito.PointBelongs(Puntito1)
 
 
 Cuentita = CuentaBancaria(9521,"David Torres",9025)
@@ -29,3 +29,12 @@ Cuentita.ShowDetails()
 
 
 Carta1 = Carta(1,"pintA1")
+
+#Este método recibe el objeto punto para construirse, pero por flojera directamente 
+#le di los parámetros sin crear un objeto como tal
+Rectangulo1 = Rectangulo(punto(-7,4),punto(-6,3))
+
+print(Rectangulo1.IsSquare())
+
+#Si mi código no es lo suficientemente claro (Aún no me acostumbro a documentar) agradecería que me lo
+#hiciera saber para poder corregir
