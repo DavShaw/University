@@ -28,19 +28,31 @@ class punto():
 
 class Rectangulo():
 
-    def __init__(self, p1: tuple, p2: tuple):
+    def __init__(self, p1: punto, p2: punto):
         self.p1 = p1
         self.p2 = p2
 
-    #No entendí el ejercicio...
+    def Perimeter(self):
+        base = sqrt(((self.p2.x - self.p1.x)**2) + ((self.p1.y - self.p1.y)**2))
+        side = sqrt(((self.p1.x - self.p1.x)**2) + ((self.p2.y - self.p1.y)**2))
+        return (base * 2) + (side * 2)
 
+    def Area(self):
+        base = sqrt(((self.p2.x - self.p1.x)**2) + ((self.p1.y - self.p1.y)**2))
+        side = sqrt(((self.p1.x - self.p1.x)**2) + ((self.p2.y - self.p1.y)**2))
+        return (base * side)
+
+    def IsSquare(self):
+        base = sqrt(((self.p2.x - self.p1.x)**2) + ((self.p1.y - self.p1.y)**2))
+        side = sqrt(((self.p1.x - self.p1.x)**2) + ((self.p2.y - self.p1.y)**2))
+        return base == side
 
 
 class Circulo():
     
     
-    def __init__(self, center: object, radio: float):
-        self.center: object = center
+    def __init__(self, center: punto, radio: float):
+        self.center: punto = center
         self.radio: float = radio
 
     def Area(self):
@@ -51,17 +63,20 @@ class Circulo():
         perimeter = (self.radio*2) * pi
         return perimeter
 
-    def PointBelongs(self,point):
-        formula = ((point.x - self.center)** 2) + ((point.y - self.center)** 2)
+    def PointBelongs(self,center, point: punto):
+        formula = ((point.x - center.x)** 2) + ((point.y - self.center.y)** 2)
         return formula <= self.radio
 
 
 class Carta():
 
-    def __init__(self, value: float, pinta: str):
-        self.value: float = value
+    def __init__(self, value: str, pinta: str):
+        self.value: str = value
         self.pinta: str = pinta
-
+        PintaList = ["pinta1", "pinta2", "pinta3", "pinta4"]
+        if (pinta).lower() not in PintaList:
+            print(f"La pinta ingresada ({pinta}) no es válida")
+            return None
 
 class CuentaBancaria():
 
