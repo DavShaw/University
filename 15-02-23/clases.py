@@ -97,7 +97,7 @@ class CuentaBancaria():
 
     def AddHandlingFee(self,percentage):
         print(f"Se aplicará (cobrará) un {percentage}% de cuota de manejo en su cuenta")
-        HandlingFeeToTake = self.balance*0.2
+        HandlingFeeToTake = self.balance*(percentage/100)
         self.balance -= HandlingFeeToTake
 
     def ShowDetails(self):
