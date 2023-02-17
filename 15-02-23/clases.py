@@ -63,7 +63,7 @@ class Circulo():
         perimeter = (self.radio*2) * pi
         return perimeter
 
-    def PointBelongs(self, point: punto):
+    def ContentPoint(self, point: punto):
         formula = ((point.x - self.center.x)** 2) + ((point.y - self.center.y)** 2)
         return formula <= self.radio
 
