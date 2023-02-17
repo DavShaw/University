@@ -70,13 +70,14 @@ class Circulo():
 
 class Carta():
 
+    CORAZON: str = "Corazón"
+    TREBOL: str = "Trébol"
+    ESPADA: str = "Espada"
+    DIAMANTE: str = "Diamante"
+
     def __init__(self, value: str, pinta: str):
         self.value: str = value
         self.pinta: str = pinta
-        PintaList = ["pinta1", "pinta2", "pinta3", "pinta4"]
-        if (pinta).lower() not in PintaList:
-            print(f"La pinta ingresada ({pinta}) no es válida")
-            return None
 
 class CuentaBancaria():
 
