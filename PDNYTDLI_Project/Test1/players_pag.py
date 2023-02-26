@@ -19,10 +19,10 @@ from functions import (
 def PlayButton():
     if entry_p1.get() == "" or entry_p2.get() == "":
         messagebox.showwarning(title = "Jugador inválido", message = "Parece que alguno de los jugadores no ha\ningresado su nombre. . .")
-    elif not (entry_p1.get() != "" and len(entry_p1.get()) <= 10):
-        messagebox.showwarning(title = "Jugador inválido", message = "Lo sentimos, pero el nombre que elegiste parece\nque tiene mas de 10 carácteres\n\n(Jugador A)")
-    elif not (entry_p2.get() != "" and len(entry_p2.get()) <= 10):
-        messagebox.showwarning(title = "Jugador inválido", message = "Lo sentimos, pero el nombre que elegiste parece\nque tiene mas de 10 carácteres\n\n(Jugador B)")
+    elif not (entry_p1.get() != "" and len(entry_p1.get()) <= 7):
+        messagebox.showwarning(title = "Jugador inválido", message = "Lo sentimos, pero el nombre que elegiste parece\nque tiene mas de 7 carácteres\n\n(Jugador A)")
+    elif not (entry_p2.get() != "" and len(entry_p2.get()) <= 7):
+        messagebox.showwarning(title = "Jugador inválido", message = "Lo sentimos, pero el nombre que elegiste parece\nque tiene mas de 7 carácteres\n\n(Jugador B)")
     else:
         messagebox.showinfo(title = "Catch the star", message = f"¡Bienvenido!")
         from game_pag import Start_game_pag

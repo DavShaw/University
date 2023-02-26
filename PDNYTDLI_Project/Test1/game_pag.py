@@ -12,9 +12,13 @@ def Start_game_pag(PlayerA,PlayerB):
     ############################################################
     #Config functions and classes
 
+    def RollDice():
+        from random import random,randint
+        messagebox.showinfo(title="Dado",message=f"X se moverá {randint(1,6)} casillas")
+
     class Cells():
 
-        def __init__(self, HookedFrame, row, column, padx = 0, pady = 0, text = "", backgroud = "#D2E0F3", blocked = False):
+        def __init__(self, HookedFrame, row, column, padx = 0, pady = 0, text = "", backgroud = "#D2E0F3", blocked = False, command = None):
 
             self.HookedFrame = HookedFrame
             self.row = row
@@ -23,16 +27,14 @@ def Start_game_pag(PlayerA,PlayerB):
             self.pady = pady
             self.background = backgroud
             self.text = text
+            self.command = command
 
             TO = Button(master = self.HookedFrame, text = self.text, background = self.background, width = 18, height = 3)
+            TO.config(command = self.command)
             TO.grid(row = self.row, column = self.column)
             
             if blocked:
                 TO.config(state = "disabled")
-
-
-        def text(self):
-            return self.text
 
     ############################################################
     #Root config
@@ -54,8 +56,10 @@ def Start_game_pag(PlayerA,PlayerB):
     ############################################################
     #Widgets config
 
-    LabelSeparator = Label(MainFrame, background = config_bgcolor)
-    LabelSeparator.grid(row = 0, column = 1, pady = 50)
+    Separator1 = Label(MainFrame, background = config_bgcolor)
+    Separator1.grid(row = 0, column = 1, pady = 50)
+    Separator2 = Label(MainFrame, background = config_bgcolor)
+    Separator2.grid(row = 1, column = 6, padx = 100)
 
     PA = PlayerA; PB = PlayerB
     WaitingCellA = Cells(MainFrame, row = 1, column = 1, text= PA, backgroud = "#C0FAA3",blocked=True)
@@ -86,6 +90,16 @@ def Start_game_pag(PlayerA,PlayerB):
     c20  = Cells(MainFrame, row=5,column=5,text=" 20 ")
 
 
+    InfoA = Cells(MainFrame, row = 2, column = 7, text = f"Info.\n{PA}")
+    InfoB = Cells(MainFrame, row = 2, column = 8, text = f"Info. \n{PB}")
+
+    ScoreA = Cells(MainFrame, row = 3, column = 7, text = f"Puntaje: Pendiente")
+    ScoreB = Cells(MainFrame, row = 3, column = 8, text = f"Puntaje: Pendiente")
+
+    RollTheDice = Cells(MainFrame, row = 5, column = 7, text = "Tirar dado", command = RollDice)
     ############################################################
     #Root mainloop
     root.mainloop()
+
+
+#Start_game_pag("David", "Manuela")
