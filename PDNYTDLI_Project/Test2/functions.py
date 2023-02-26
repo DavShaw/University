@@ -207,7 +207,23 @@ def select_1st_player(pa,pb):
     else: #if 2
         file.write(pb)
 
-def add_score(player, increment = 1, database = "game_info.db", table = "players_info"):
+def add_score(player, increment = 1, database = "game_info.db"):
+
+    #Connecting and creating cursos just to take current score
+    connector = sqlite3.connect(take_files(database))
+    cursor = connector.cursor()
+
+    current_score = check_current_score(player,database)
+
+    #+1 score to current score
+    current_score += increment
+    cursor.execute(f"update players_info set score = {current_score} where player == '{player}'")
+    connector.commit()
+
+    #closing database connection
+    connector.close()
+
+def check_current_score(player, database = "game_info.db"):
 
     #Connecting and creating cursos just to take current score
     connector = sqlite3.connect(take_files(database))
@@ -218,16 +234,8 @@ def add_score(player, increment = 1, database = "game_info.db", table = "players
     current_score = cursor.fetchall()
     current_score = current_score[0] #taking 1st element of the list
     current_score = current_score[0] #taking 1st element of the tuple
-
-    #+1 score to current score
-    current_score += increment
-    cursor.execute(f"update players_info set score = {current_score} where player == '{player}'")
-    connector.commit()
-
-    #closing database connection
     connector.close()
-
-    pass
+    return current_score
 
 def check_current_player(file_to_check = "current_turn.txt"):
     file = open(take_files(file_to_check),"r")
