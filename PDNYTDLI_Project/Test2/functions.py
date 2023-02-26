@@ -74,15 +74,18 @@ def hacer_pregunta():
     # Función para verificar la respuesta del usuario
     def verificar_respuesta(respuesta):
         if respuesta == respuesta_correcta:
+
+            answer_generator(answer = "True")
+
             messagebox.showinfo("Resultado", "¡Respuesta correcta!")
             root.destroy()  # Cerrar la ventana de diálogo
-            return True
         else:
+
+            answer_generator(answer = "False")
+
             messagebox.showerror("Resultado", f"Respuesta incorrecta.\nLa respuesta correcta era: {respuesta_correcta}")
             root.destroy()  # Cerrar la ventana de diálogo
-            return False
            
-    
     # Agregar botones para las opciones
     boton_a = tk.Button(root, text="A", command=lambda: verificar_respuesta("A"))
     boton_a.grid(row=2,column=0)
@@ -165,17 +168,16 @@ def make_table(database_name = "game_info.db"):
     try:
         connector = sqlite3.connect(take_files(database_name))
         cursor = connector.cursor()
-        cursor.execute("CREATE TABLE players_info (player text PRIMARY KEY, position integer, right_ask_amount integer)")
+        cursor.execute("CREATE TABLE players_info (player text PRIMARY KEY, position integer, score integer)")
         connector.close()
     except sqlite3.Error as the_error:
             print("Hay un imprevisto en la zona de DB...")
             print("Tipo de error:",the_error)
 
 def delete_database(database_name = "game_info.db"):
-    if path.exists(take_files(database_name)):
-        remove(take_files(database_name))
-    if path.exists(take_files("current_turn.txt")):
-        remove(take_files("current_turn.txt"))
+    file_deleter(database_name)
+    file_deleter("answer.txt")
+    file_deleter("current_turn.txt")
 
 def insert_players_basic_info(playera,playerb,database_name = "game_info.db"):
     try:
@@ -192,6 +194,11 @@ def insert_players_basic_info(playera,playerb,database_name = "game_info.db"):
 def roll_dice(limit = 6):
     return random.randint(1,limit)
 
+def answer_generator(answer = "False",answer_file = "answer.txt"):
+    file_deleter(answer_file)
+    file = open(take_files(answer_file),"w")
+    file.write(answer)
+
 def select_1st_player(pa,pb):
     #1 = a ; 2 = b
     file = open(take_files("current_turn.txt"), "w")
@@ -200,10 +207,42 @@ def select_1st_player(pa,pb):
     else: #if 2
         file.write(pb)
 
+def add_score(player, increment = 1, database = "game_info.db", table = "players_info"):
+
+    #Connecting and creating cursos just to take current score
+    connector = sqlite3.connect(take_files(database))
+    cursor = connector.cursor()
+
+    cursor.execute(f"select score from players_info where player == '{player}'")
+    
+    current_score = cursor.fetchall()
+    current_score = current_score[0] #taking 1st element of the list
+    current_score = current_score[0] #taking 1st element of the tuple
+
+    #+1 score to current score
+    current_score += increment
+    cursor.execute(f"update players_info set score = {current_score} where player == '{player}'")
+    connector.commit()
+
+    #closing database connection
+    connector.close()
+
+    pass
+
 def check_current_player(file_to_check = "current_turn.txt"):
     file = open(take_files(file_to_check),"r")
     current = file.readlines()
     return(current[0])
+
+def check_current_answer(file_to_check = "answer.txt"):
+    file = open(take_files(file_to_check))
+    answer = file.readlines()
+    answer = answer[0]
+    return answer == "True"
+
+def file_deleter(file_name = "answer.txt"):
+    if path.exists(take_files(file_name)):
+        remove(take_files(file_name))
 
 def change_current_player(pa,pb,file_to_change = "current_turn.txt"):
     currentis = check_current_player()
