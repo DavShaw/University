@@ -42,4 +42,33 @@ class TodoBook:
         self.todos[generated_id] = Creating_object
         return generated_id
 
-    
+    def pending_todos(self):
+        return [self.todos[obj_key] for obj_key in self.todos if not(self.todos[obj_key].completed)]
+
+    def completed_todos(self):
+        return [self.todos[obj_key] for obj_key in self.todos if (self.todos[obj_key].completed)]
+
+    def tags_todo_count(self):
+        
+        all_objects = self.todos.values()
+        
+        all_tags = []
+
+        return_dict = {}
+
+        #Take all tags from all objects
+        
+        for i in all_objects:
+            if not (all_objects.tags in all_tags):
+                all_tags.append(all_objects.tags)
+        
+        
+        for j in all_objects:
+            counter = 0
+            for k in all_tags:
+                if j.tags == all_tags[k]:
+                    counter += 1
+                return_dict[all_tags[k]] = counter
+
+        return return_dict
+        
