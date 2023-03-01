@@ -21,8 +21,18 @@ como una lista vacía.
 
 
 
+
+
+
+
+
 2. En la clase `Todo`, defina un método de instancia `mark_completed` en el 
 cual se cambia el valor del atributo `completed` a `True`. 
+
+
+
+
+
 
 
 
@@ -34,9 +44,19 @@ lo debe agregar.
 
 
 
+
+
+
+
+
 4. En la clase `Todo`, defina el método especial `__str__` que retorna un string.
 Este método debe retornar un string que contenga el código del todo y el
 título, de la siguiente forma "code_id - title".
+
+
+
+
+
 
 
 
@@ -45,6 +65,11 @@ título, de la siguiente forma "code_id - title".
 `todos` que es un diccionario donde la clave son enteros y los valores son objetos
 de la clase `Todo`. En el método inicializador, inicialice el atributo `todos` como
 un diccionario vacío.
+
+
+
+
+
 
 
 
@@ -60,10 +85,20 @@ En el cuerpo del método implemente el código necesario para hacer lo siguiente
 
 
 
+
+
+
+
+
 7. En la clase `TodoBook`, defina un método de instancia `pending_todos` que retorne
 una lista de objetos de la clase `Todo`. En el cuerpo del método, utilice un
 *list comprehension* para crear una lista con todos los objetos del diccionario `todos` que
 tienen el atributo `completed` con valor `False`.
+
+
+
+
+
 
 
 
@@ -76,10 +111,20 @@ tienen el atributo `completed` con valor `True`.
 
 
 
+
+
+
+
+
 9. En la clase `TodoBook`, defina un método de instancia `tags_todo_count` el cual retorna
 un diccionario donde las claves son string y los valores enteros. En el cuerpo del método
 implemente un algoritmo para construir un diccionario que indique, por cada tag, cuántos objetos
 Todo tienen dicho tag asignado.
+
+
+
+
+
 
 
 
