@@ -2,6 +2,8 @@ import random
 import tkinter as tk
 import tkinter.messagebox as messagebox
 import sqlite3
+from gtts import gTTS
+from playsound import playsound
 from os import path, remove
 
 def hacer_pregunta():
@@ -114,7 +116,7 @@ def make_matrix(how_long = 20):
         else:
             list = []
             for i in range(0,how_long):
-                list.append(f" {i+1} ")
+                list.append(f"  ")
             return list
     except ValueError as Error:
         print("Error:",Error)
@@ -260,5 +262,150 @@ def change_current_player(pa,pb,file_to_change = "current_turn.txt"):
     else:
         file.write(pa)
         
-#indice, pregunta, opciones = hacer_pregunta()
-#print(f"Pregunta {indice + 1}: {pregunta}\n{opciones}")
+def player_mover(list, player, moving):
+    limit = len(list)
+    current_position = check_current_position(player)
+    current_position = int(current_position)
+    
+    #If dice marks a > number 
+    if ((current_position + moving) > limit):
+        change_current_player_position(player,limit)
+
+    #If dice marks a < number and that numbers pass 0 index
+    
+    elif current_position + moving <= 0:
+        change_current_player_position(player, 0)
+
+    #If dice marks a < number
+    elif ((current_position + moving) < limit):
+        change_current_player_position(player, (current_position+moving))
+
+def check_current_position(player, database = "game_info.db"):
+
+    #Connecting and creating cursos just to take current score
+    connector = sqlite3.connect(take_files(database))
+    cursor = connector.cursor()
+
+    cursor.execute(f"select position from players_info where player == '{player}'")
+    
+    current_score = cursor.fetchall()
+    current_score = current_score[0] #taking 1st element of the list
+    current_score = current_score[0] #taking 1st element of the tuple
+    connector.close()
+    return current_score
+
+def change_current_player_position(player, new_position, database = "game_info.db"):
+    #Connecting and creating cursos just to take current score
+    connector = sqlite3.connect(take_files(database))
+    cursor = connector.cursor()
+
+    cursor.execute(f"update players_info set position = {new_position} where player == '{player}'")
+    
+    connector.commit()
+    connector.close()
+
+def punishment(list, player):
+    punishement_type = random.randint(1,3)
+
+    if punishement_type == 1:
+        #Puente
+        player_mover(list,player,-3)
+        talker(f"{player}, has respondido fatal... La sanción por tu error será Puente... (Retrocederas 3 casillas)")
+
+
+    elif punishement_type == 2:
+        #Resbalon
+        player_mover(list,player,-2)
+        talker(f"{player}, has respondido fatal... La sanción por tu error será Resbalon... (Retrocederas 2 casillas)")
+
+
+    elif punishement_type == 3:
+        #Calavera
+        player_mover(list, player, -99999)
+        talker(f"{player}, has respondido fatal... La sanción por tu error será Calavera... (Retrocederas hasta el inicio)")
+    
+def talker(StringToVoice):
+    tts = gTTS(StringToVoice, lang='es-US')
+    tts.save(take_files("punishment_audio.mp3"))
+    playsound(take_files("punishment_audio.mp3"))
+    file_deleter("punishment_audio.mp3")
+
+def winer_detector(database = "game_info.db"):
+
+    #Connecting and creating cursos just to take current score
+    connector = sqlite3.connect(take_files(database))
+    cursor = connector.cursor()
+
+    cursor.execute(f"select player from players_info where position == 20")
+    
+    current_score = cursor.fetchall()
+    if current_score == []:
+        return None
+    else:
+        return current_score[0]
+    connector.close()
+    return current_score
+    
+def game_stopper(database = "game_info.db"):
+    messagebox.showinfo(title="Juego finalizado", message = f"Tenemos un ganador, y es: {winer_detector()}\n\nEl juego ya acabo :(. Te invitamos a que mires el siguiente resumen de la partida)")
+    messagebox.showinfo(title="Juego finalizado", message=game_current_info())
+
+def game_current_info(database = "game_info.db"):
+    dict_with_info = {}
+
+    connector = sqlite3.connect(take_files(database))
+    cursor = connector.cursor()
+
+
+
+
+    cursor.execute(f"select player from players_info")
+    all_players = cursor.fetchall()
+
+    dict_with_info["PlayerA_name"] = all_players[0][0]
+    dict_with_info["PlayerB_name"] = all_players[1][0]
+
+
+
+    cursor.execute(f"select position from players_info")
+    all_positions = cursor.fetchall()
+
+    dict_with_info["PlayerA_position"] = all_positions[0][0]
+    dict_with_info["PlayerB_position"] = all_positions[1][0]
+
+    cursor.execute(f"select score from players_info")
+    all_score = cursor.fetchall()
+
+    dict_with_info["PlayerA_score"] = all_score[0][0]
+    dict_with_info["PlayerB_score"] = all_score[1][0]
+
+    connector.close()
+    
+    PA_name = dict_with_info["PlayerA_name"]
+    PA_position = dict_with_info["PlayerA_position"]
+    PA_score = dict_with_info["PlayerA_score"]
+
+    PB_name = dict_with_info["PlayerB_name"]
+    PB_position = dict_with_info["PlayerB_position"]
+    PB_score = dict_with_info["PlayerB_score"]
+
+    temp_msg = (
+        f"""
+        Jugador (A)
+            - Nombre: {PA_name}
+            - Posición: {PA_position}
+            - Aciertos: {PA_score}
+
+        Jugador (B)
+            - Nombre: {PB_name}
+            - Posición: {PB_position}
+            - Aciertos: {PB_score}
+        """
+    )
+
+    return temp_msg
+
+def spacer(jumps):
+    for i in range(0,jumps-1):
+        print("\n")
+
