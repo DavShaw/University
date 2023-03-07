@@ -57,18 +57,18 @@ def hacer_pregunta():
     # Crear una ventana de diálogo para la pregunta
     root = tk.Tk()
     s_w = root.winfo_screenwidth(); s_h = root.winfo_screenheight()
-    w = 300; h = 200; x = (s_w/2) - (w/2) ; y = ((s_h/2)+200) - (h-2)
+    w = 400; h = 250; x = (s_w/2) - (w/2) ; y = ((s_h/2)+200) - (h-2)
     root.geometry("%dx%d+%d+%d" % (w, h, x, y))
     root.title(f"Pregunta {indice_pregunta + 1}")
 
     RootFrame = tk.Frame()
     RootFrame.place(x = 0, y = 0, relwidth = 1, relheight = 1)
-    
+    RootFrame.pack()
     # Agregar la pregunta y las opciones como etiquetas
-    pregunta_label = tk.Label(root, text=pregunta)
+    pregunta_label = tk.Label(RootFrame, text=pregunta)
     pregunta_label.grid(row=0,column=1)
 
-    opciones_label = tk.Label(root, text=opciones)
+    opciones_label = tk.Label(RootFrame, text=opciones)
     opciones_label.grid(row=1,column=1)
 
     
@@ -89,15 +89,15 @@ def hacer_pregunta():
             root.destroy()  # Cerrar la ventana de diálogo
            
     # Agregar botones para las opciones
-    boton_a = tk.Button(root, text="A", command=lambda: verificar_respuesta("A"))
+    boton_a = tk.Button(RootFrame, text="A", command=lambda: verificar_respuesta("A"))
     boton_a.grid(row=2,column=0)
 
 
-    boton_b = tk.Button(root, text="B", command=lambda: verificar_respuesta("B"))
+    boton_b = tk.Button(RootFrame, text="B", command=lambda: verificar_respuesta("B"))
     boton_b.grid(row=2,column=1)
 
 
-    boton_c = tk.Button(root, text="C", command=lambda: verificar_respuesta("C"))
+    boton_c = tk.Button(RootFrame, text="C", command=lambda: verificar_respuesta("C"))
     boton_c.grid(row=2,column=2)
 
     #pregunta_label.pack(pady=10)
