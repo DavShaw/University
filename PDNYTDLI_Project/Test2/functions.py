@@ -310,19 +310,19 @@ def punishment(list, player):
     if punishement_type == 1:
         #Puente
         player_mover(list,player,-3)
-        talker(f"{player}, has respondido fatal... La sanción por tu error será Puente... (Retrocederas 3 casillas)")
+        talker(f"{player}, has fallado... La sanción por tu error será Puente... (Retrocederas 3 casillas)")
 
 
     elif punishement_type == 2:
         #Resbalon
         player_mover(list,player,-2)
-        talker(f"{player}, has respondido fatal... La sanción por tu error será Resbalon... (Retrocederas 2 casillas)")
+        talker(f"{player}, has fallado... La sanción por tu error será Resbalon... (Retrocederas 2 casillas)")
 
 
     elif punishement_type == 3:
         #Calavera
         player_mover(list, player, -99999)
-        talker(f"{player}, has respondido fatal... La sanción por tu error será Calavera... (Retrocederas hasta el inicio)")
+        talker(f"{player}, has fallado... La sanción por tu error será Calavera... (Retrocederas hasta el inicio)")
     
 def talker(StringToVoice):
     tts = gTTS(StringToVoice, lang='es-US')

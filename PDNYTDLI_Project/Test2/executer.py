@@ -16,7 +16,7 @@ select_1st_player(PA,PB)
 insert_players_basic_info(PA,PB)
 
 Terminal('cls')
-player_mover(Posiciones,PA,15)
+#player_mover(Posiciones,PA,15)
 
 while(winer_detector() == None): #Ejecutando el juego mientras nadie este en la casilla 20
 
