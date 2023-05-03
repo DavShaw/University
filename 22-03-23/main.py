@@ -1,4 +1,5 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field, fields
+from typing import ClassVar
 
 
 @dataclass
@@ -6,7 +7,6 @@ class Elemento():
     nombre: str
     def __eq__(self, other: object) -> bool:
         return self == other
-
 
 
 class Conjunto():
@@ -66,5 +66,23 @@ class Conjunto():
 
 
     
+
+
+
+
+@dataclass
+class Person:
+
+    name: str
+    age: int
+    test: list = field(default_factory = list)
+    country: str = field(init = True, default = "Colombia")
+
+
+
+    def __init__(self, total_instancesof = []) -> None:
+        
+        pass
+
 
 
