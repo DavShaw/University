@@ -89,7 +89,8 @@ def generate_public_pass(phi_number, number_list):
         for number_to_add in number_list:
              if relative_prime(phi_number,number_to_add):
                 relative_prime_into_list.append(number_to_add)
-        return relative_prime_into_list[random.randint(0,len(relative_prime_into_list))]
+        random_number = random.randint(0,len(relative_prime_into_list)-1)
+        return relative_prime_into_list[random_number]
     except Exception as error:
         print(f"Ha ocurrido un error en módulo 'generate_public_pass(phi_number,number_list)': {error}")
 
@@ -104,14 +105,12 @@ def generate_private_pass(e, phi_number):
     except Exception as error:
         print(f"Ha ocurrido un error en el módulo 'generate_private_pass()': {error}")
 
-p, q = request_numbers(29,13)
+p, q = request_numbers(11,29)
 
 n = modular_number(p,q)
 
 phi_number = phi(p,q)
 
-numbers = numbers_between(1,phi_number)
-
-public_pass = generate_public_pass(phi_number,numbers)
-
-private_pass = generate_private_pass(public_pass,phi_number)
+while True:
+    numbers = numbers_between(1,phi_number)
+    e = generate_public_pass(phi_number,numbers)
