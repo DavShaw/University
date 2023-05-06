@@ -1,6 +1,7 @@
 import random
+import time
 
-characters_list = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'X', 'Y', 'Z', 'á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'Í', 'Ó', 'Ú', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '+', '-', '*', '/', ' ', '^', '%', '#', '$', '@', ',', ';', '.', ':', '¿', '?', '¡', '!', '_', '(', ')', '[', ']', '{', '}', '\\', '=', '¬', '~', 'ü', 'Ü']
+characters_list = ['a' ,'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't', 'u','v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'Í', 'Ó', 'Ú', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '+', '-', '*', '/', ' ', '^', '%', '#', '$', '@', ',', ';', '.', ':', '¿', '?', '¡', '!', '_', '(', ')', '[', ']', '{', '}', '\\', '=', '¬', '~', 'ü', 'Ü']
 
 def show_list():
         try:
@@ -134,21 +135,27 @@ def encrypting(msg,e,n,list):
         return None
 
 def unencrypting(encrypted_list,d,n,list):
+    index_list = []
+
+    for character in encrypted_list:
+        index = (character**d)
+        index = index%n
+        index_list.append(index)
+
+    for index in range(0,len(index_list)):
+        index_list[index] = characters_list[index_list[index]]
     
-    original_msg = []
-    msg_to_return = ""
+    return index_list
 
-    for string in encrypted_list:
-        index = list.index(string)
-        index = (index**d)%n
-        original_msg.append(index)
+def print_data_list(list):
+    msg = ""
+    for element in list:
+        msg += str(element)
+    return msg
 
-    for values in original_msg:
-        msg_to_return += original_msg[values]
-
-    return msg_to_return
-
-
+def spacer(how_much: int = 2):
+    for i in range(0,how_much):
+        print("")
 
 
 def main():
@@ -174,34 +181,35 @@ def main():
     private_pass = generate_private_pass(public_pass,phi_number)
 
 
-    print(f"""
-    
-
-Números válidos. Iniciando operaciones...
-p = {p}
-q = {q}
-Clave pública = {public_pass}
-    """)
+    print("Datos válidos. Iniciando operaciones")
+    time.sleep(2)
+    spacer(10)
 
 
     sender = input("Nombre del emisor: ")
     receiver = input("Nombre del receptor: ")
 
+    spacer(2)
 
-    message = input(f"{sender}, escribe un mensaje para encriptar: ")
+    message = input(f"{sender}, escribe un mensaje para {receiver}: ")
     encrypted_message = encrypting(msg = message, e = public_pass, n = number_modular, list = characters_list)
-    #unencrypted_message = unencrypting(encrypted_list = encrypted_message, d = private_pass, n = number_modular, list = characters_list)
+    unencrypted_message = unencrypting(encrypted_list = encrypted_message, d = private_pass, n = number_modular, list = characters_list)
 
 
-    print(f"""
-    El mensaje original fue: {message}
-    El mensaje encriptado fue: {encrypted_message}
-    clave privada: {private_pass}
-    n: {number_modular}
-    
-    """)
+    print(f"Hey, {receiver} te ha llegado un mensaje encriptado de {sender}. Si deseas ver el mensaje escribe algunas de las siguientes opciones (real / encrypted)")
+    spacer(2)
+    option = input(f"¿Qué tipo de mensaje deseas ver?: ")
+    spacer(5)
+
+    if option.lower() == "real":
+        print(print_data_list(unencrypted_message))
+    else:
+        print(print_data_list(encrypted_message))
+
+    spacer(10)
+    print("Programa finalizado. Gracias por encriptar con nosotros :)")
+        
 
 
 
 main()
-
