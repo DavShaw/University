@@ -1,6 +1,6 @@
 import random
 
-characters_list = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'X', 'Y', 'Z', 'á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'Í', 'Ó', 'Ú', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '+', '-', '*', '/', ' ', '^', '%', '#', '$', '@', ',', ';', '.', ':', '¿', '?', '¡', '!', '_', '(', ')', '[', ']', '{', '}', '\\', '=', '¬', 'ü', 'Ü']
+characters_list = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'X', 'Y', 'Z', 'á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'Í', 'Ó', 'Ú', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '+', '-', '*', '/', ' ', '^', '%', '#', '$', '@', ',', ';', '.', ':', '¿', '?', '¡', '!', '_', '(', ')', '[', ']', '{', '}', '\\', '=', '¬', '~', 'ü', 'Ü']
 
 def show_list():
         try:
@@ -105,12 +105,103 @@ def generate_private_pass(e, phi_number):
     except Exception as error:
         print(f"Ha ocurrido un error en el módulo 'generate_private_pass()': {error}")
 
-p, q = request_numbers(11,29)
+def checking_characters(msg,list):
 
-n = modular_number(p,q)
+    if not isinstance(msg,str):
+        print("Lo sentimos, debes ingresar un carácter que sea de tipo string")
+        return False
 
-phi_number = phi(p,q)
+    else:
+        for element in msg:
+            if not (element in list):
+                print(f"Lo sentimos, se detectó un carácter que no está en la lista de carácteres válidos ({element})")
+                return False
+        return True
 
-while True:
+def encrypting(msg,e,n,list):
+    if checking_characters(msg, list):
+        encrypted_message = []
+
+        for string in msg:
+
+            index = list.index(string)
+            index = (index**e)%n
+
+            encrypted_message.append(index)
+
+        return encrypted_message
+    else:
+        return None
+
+def unencrypting(encrypted_list,d,n,list):
+    
+    original_msg = []
+    msg_to_return = ""
+
+    for string in encrypted_list:
+        index = list.index(string)
+        index = (index**d)%n
+        original_msg.append(index)
+
+    for values in original_msg:
+        msg_to_return += original_msg[values]
+
+    return msg_to_return
+
+
+
+
+def main():
+    n1 = input("Primer número (PRIMO - +2 DIGITOS): ")
+    n2 = input("Segundo número (PRIMO - +2 DIGITOS): ")
+
+    p,q = request_numbers(n1, n2)
+
+    while None == (p or q):
+        print("Números no válidos, intenta nuevamente")
+        
+
+        n1 = input("Primer número (PRIMO - +2 DIGITOS): ")
+        n2 = input("Segundo número (PRIMO - +2 DIGITOS): ")
+        p,q = request_numbers(n1, n2)
+
+
+
+    number_modular = modular_number(p,q)
+    phi_number = phi(p,q)
     numbers = numbers_between(1,phi_number)
-    e = generate_public_pass(phi_number,numbers)
+    public_pass = generate_public_pass(phi_number, numbers)
+    private_pass = generate_private_pass(public_pass,phi_number)
+
+
+    print(f"""
+    
+
+Números válidos. Iniciando operaciones...
+p = {p}
+q = {q}
+Clave pública = {public_pass}
+    """)
+
+
+    sender = input("Nombre del emisor: ")
+    receiver = input("Nombre del receptor: ")
+
+
+    message = input(f"{sender}, escribe un mensaje para encriptar: ")
+    encrypted_message = encrypting(msg = message, e = public_pass, n = number_modular, list = characters_list)
+    #unencrypted_message = unencrypting(encrypted_list = encrypted_message, d = private_pass, n = number_modular, list = characters_list)
+
+
+    print(f"""
+    El mensaje original fue: {message}
+    El mensaje encriptado fue: {encrypted_message}
+    clave privada: {private_pass}
+    n: {number_modular}
+    
+    """)
+
+
+
+main()
+
