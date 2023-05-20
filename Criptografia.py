@@ -143,7 +143,7 @@ def unencrypting(encrypted_list,d,n,list):
         index_list.append(index)
 
     for index in range(0,len(index_list)):
-        index_list[index] = characters_list[index_list[index]]
+        index_list[index] = list[index_list[index]]
     
     return index_list
 
@@ -156,6 +156,16 @@ def print_data_list(list):
 def spacer(how_much: int = 2):
     for i in range(0,how_much):
         print("")
+
+
+
+
+
+
+
+
+
+
 
 
 def main():
@@ -196,20 +206,29 @@ def main():
     unencrypted_message = unencrypting(encrypted_list = encrypted_message, d = private_pass, n = number_modular, list = characters_list)
 
 
-    print(f"Hey, {receiver} te ha llegado un mensaje encriptado de {sender}. Si deseas ver el mensaje escribe algunas de las siguientes opciones (real / encrypted)")
-    spacer(2)
-    option = input(f"¿Qué tipo de mensaje deseas ver?: ")
-    spacer(5)
 
-    if option.lower() == "real":
-        print(print_data_list(unencrypted_message))
-    else:
-        print(print_data_list(encrypted_message))
 
-    spacer(10)
-    print("Programa finalizado. Gracias por encriptar con nosotros :)")
+    print(f"""
+Solicitudes del profesor:
+ - Enseñar claves (e y d)
+ - Enseñar mensajes (original, encriptado, desencriptado)
+
+
+    CLAVE PÚBLICA: {public_pass}
+    CLAVE PRIVADA: {private_pass}
+    
+    MENSAJE ORIGINAL: {message}
+
+    MENSAJE ENCRIPTADO: {encrypted_message}
+
+    MENSAJE DESENCRIPTADO: {unencrypted_message}
+
+    MENSAJE ENCRIPTADO (Estéticamente): {print_data_list(encrypted_message)}
+
+    MENSAJE DESNCRIPTADO (Estéticamente): {print_data_list(unencrypted_message)}
+
+    """)
         
-
 
 
 main()

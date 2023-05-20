@@ -1,4 +1,4 @@
-ShowVenn = input("Activar Diagrama: ")
+'''ShowVenn = input("Activar Diagrama: ")
 if ShowVenn.lower() == ("t"):
     ShowVenn = True
 else:
@@ -32,3 +32,4 @@ if ShowVenn:
     from matplotlib_venn import venn3, venn3_circles,venn3_unweighted
 
 
+'''
